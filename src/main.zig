@@ -9,14 +9,13 @@ const JishoData = struct {
     slug: []const u8,
     japanese: []struct {
       word: []const u8,
-      reading: []const u8,
+      reading: ?[]const u8 = null,
     },
     senses: []struct {
       english_definitions: [][]const u8
     },
   };
 
-  meta: struct { status: u32 },
   data: []DataEntry,
 };
 
@@ -58,7 +57,14 @@ fn formatDef( buf: []u8, data: *JishoData.DataEntry, definition_count: u32, sens
     return error.NotJapanese;
   }
 
-  const wordb = try z.fmt.bufPrint( buf, "{s}（{s}） - ", .{ data.japanese[0].word, data.japanese[0].reading } );
+  var wordb: []const u8 = undefined;
+  if( data.japanese[0].reading == null ) {
+    wordb = try z.fmt.bufPrint( buf, "{s} - ", .{ data.japanese[0].word } );
+  }
+  else {
+    wordb = try z.fmt.bufPrint( buf, "{s}（{s}） - ", .{ data.japanese[0].word, data.japanese[0].reading.? } );
+  }
+
   var len = wordb.len;
   var engb: []const u8 = buf[len..];
   for( data.senses, 0.. ) |sense, i| {

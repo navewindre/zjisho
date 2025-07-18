@@ -1,0 +1,4 @@
+#!/bin/sh
+
+
+xclip -selection clipboard -o | xargs zjisho | xclip -selection clipboard
