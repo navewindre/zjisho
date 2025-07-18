@@ -1,0 +1,17 @@
+.{
+    .name = .zjisho,
+    .version = "1.0.0",
+    .fingerprint = 0xa849130ea7f2b81e, // Changing this has security and trust implications.
+    .minimum_zig_version = "0.14.1",
+    .dependencies = .{
+    },
+
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+        // For example...
+        //"LICENSE",
+        //"README.md",
+    },
+}
